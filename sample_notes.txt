@@ -1,0 +1,19 @@
+Transformer Architecture & Large Language Models — Quick Revision Notes
+
+1. Self-Attention Mechanism
+Self-attention allows every token in an input sequence to attend directly to every other token in a single parallel matrix operation. Scaled dot-product attention computes Attention(Q, K, V) = softmax((Q K^T) / sqrt(d_k)) V, where Q (Queries), K (Keys), and V (Values) are linear projections of the input embeddings, and dividing by sqrt(d_k) prevents large dot products from pushing softmax into regions with tiny gradients.
+
+2. Multi-Head Attention
+Instead of performing a single attention function, multi-head attention projects Q, K, and V into multiple lower-dimensional subspaces in parallel. Each head learns different linguistic or structural relationships (such as coreference, syntax, or semantic similarity), and their outputs are concatenated and linearly projected back to the model dimension.
+
+3. Positional Encoding
+Because Transformers process all tokens in parallel rather than sequentially like RNNs or LSTMs, they have no built-in notion of token order. Positional encodings (sinusoidal or learned vectors) are added to token embeddings so the model can distinguish word positions and relative distances.
+
+4. Encoder vs Decoder Architectures
+Encoder-only models (such as BERT) use bidirectional self-attention and excel at understanding tasks like classification and extractive question answering. Decoder-only models (such as GPT and Gemini) use causal (masked) self-attention to predict the next token autoregressively, making them ideal for text generation. Encoder-decoder models (such as T5) combine both for sequence-to-sequence tasks like translation and summarization.
+
+5. Prompt Engineering and Structured Outputs
+Structured prompting instructs an LLM to return responses conforming to a strict schema such as JSON. Enforcing JSON output with explicit field definitions and grounding rules reduces hallucinations and allows downstream software (such as pandas DataFrames) to parse and export generated content reliably without brittle regex post-processing.
+
+6. Temperature and Sampling
+Temperature controls the randomness of token sampling from the model's output probability distribution. Lower temperatures (e.g., 0.1 to 0.3) make outputs more deterministic and factual, which is ideal for study flashcards and data extraction, whereas higher temperatures (e.g., 0.8 to 1.0) increase creativity and diversity.
